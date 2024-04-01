@@ -2,7 +2,7 @@ from constants import BLOCK_SIZE_SHA256
 from utils import string_to_binary, create_blocks
 from sha_ops import create_message_schedule, compression
 
-def generate_sha256(msg):
+def sha256_digest(msg):
     
     # add checks for string or byte data and do the needful
     # for non above data return error
@@ -29,21 +29,9 @@ def generate_sha256(msg):
     #sha computation
     for block in blocks:
         w = create_message_schedule(block)
-
         h_val = compression(w)
         
     return ((h_val[0]).to_bytes(4, 'big') + (h_val[1]).to_bytes(4, 'big') +
             (h_val[2]).to_bytes(4, 'big') + (h_val[3]).to_bytes(4, 'big') +
             (h_val[4]).to_bytes(4, 'big') + (h_val[5]).to_bytes(4, 'big') +
             (h_val[6]).to_bytes(4, 'big') + (h_val[7]).to_bytes(4, 'big'))
-    
-    
-    
-if __name__ == "__main__":
-    
-    # read from file or string or binary stream
-    # handle args
-    # handle errors
-    # create multiple files for all uses
-    
-    print(generate_sha256("Hello world!!").hex())
