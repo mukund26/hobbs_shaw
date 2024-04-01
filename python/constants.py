@@ -14,4 +14,6 @@ h_val = [
     0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
 ]
 
-MOD = 2**32
+MOD32 = 2**32
+
+BLOCK_SIZE_SHA256 = 512
