@@ -5,6 +5,11 @@ def string_to_binary(msg):
     return ''.join(binary)
 
 
+def binary_file_to_binary_string(binary_data):
+    binary_string = ''.join(format(byte, '08b') for byte in binary_data)
+    return binary_string
+
+
 def string_to_int(binary_str):
     return int(binary_str, 2)
 
