@@ -1,6 +1,6 @@
 from utils import string_to_int
 from bitwise_ops import _right_rotate, _right_shift
-from constants import MOD32, h_val, k
+from constants import MOD32, h_val, k, sha512_h, sha512_k, MOD64
 
 def create_message_schedule(block):
     w = []
@@ -53,3 +53,56 @@ def compression(w):
     h_val[7] = (h_val[7] + h) % MOD32
     
     return h_val
+
+
+def sha512_create_message_schedule(block):
+    w = []
+    for i in range(0, 1024, 64):
+        w.append(string_to_int(block[i : i + 64]))
+                
+    for i in range(16, 80):
+        s0 = _right_rotate(w[i - 15], 1, 64) ^ _right_rotate(w[i - 15], 8, 64) ^ _right_shift(w[i - 15], 7)
+        s1 = _right_rotate(w[i - 2], 19, 64) ^ _right_rotate(w[i - 2], 61, 64) ^ _right_shift(w[i - 2], 6)
+        ans = (w[i - 16] + s0 + w[i - 7] + s1) % MOD64
+        w.append(ans)
+        
+    return w
+
+
+def sha512_compression(w):
+    a = sha512_h[0]
+    b = sha512_h[1]
+    c = sha512_h[2]
+    d = sha512_h[3]
+    e = sha512_h[4]
+    f = sha512_h[5]
+    g = sha512_h[6]
+    h = sha512_h[7]    
+        
+    for i in range(0, 80):
+        s1 = _right_rotate(e, 14, 64) ^ _right_rotate(e, 18, 64) ^ _right_rotate(e, 41, 64)
+        ch = (e & f) ^ ((~e) & g)
+        temp1 = (h + s1 + ch + sha512_k[i] + w[i]) % MOD64
+        s0 = _right_rotate(a, 28, 64) ^ _right_rotate(a, 34, 64) ^ _right_rotate(a, 39, 64)
+        maj = (a & b) ^ (a & c) ^ (b & c)
+        temp2 = (s0 + maj) % MOD64
+        
+        h = g
+        g = f
+        f = e
+        e = (d + temp1) % MOD64
+        d = c
+        c = b
+        b = a
+        a = (temp1 + temp2) % MOD64
+        
+    sha512_h[0] = (sha512_h[0] + a) % MOD64
+    sha512_h[1] = (sha512_h[1] + b) % MOD64
+    sha512_h[2] = (sha512_h[2] + c) % MOD64
+    sha512_h[3] = (sha512_h[3] + d) % MOD64
+    sha512_h[4] = (sha512_h[4] + e) % MOD64
+    sha512_h[5] = (sha512_h[5] + f) % MOD64
+    sha512_h[6] = (sha512_h[6] + g) % MOD64
+    sha512_h[7] = (sha512_h[7] + h) % MOD64
+    
+    return sha512_h

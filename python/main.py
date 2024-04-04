@@ -1,6 +1,7 @@
 from sha256 import sha256_digest
+from sha512 import sha512_digest
 import sys
-from testing_suite.tester import hash
+from testing_suite.tester import hash, hash_sha512
 from config import setup_args
 from logger import log_hash
 
@@ -38,7 +39,11 @@ def main(args):
         ans = expected_hash == calculated
         print('Verifying hash: ', ans)
     elif args['sha512']:
-        print("Working on SHA512")
+        expected_hash = hash_sha512(msg, args['binary'])
+        calculated = sha512_digest(msg).hex()
+        log_hash(calculated)
+        ans = expected_hash == calculated
+        print('Verifying hash: ', ans)
     else:
         print("Flag or algo doesnt exist, contact the owner of the repo")
     
