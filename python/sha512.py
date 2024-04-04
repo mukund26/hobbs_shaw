@@ -1,12 +1,11 @@
 from constants import BLOCK_SIZE_SHA256
 from utils import string_to_binary, create_blocks
 from sha_ops import create_message_schedule, compression
+from preprocess import convert_input_to_binary_string
 
 def sha512_digest(msg):
-    
-    # add checks for string or byte data and do the needful
-    # for non above data return error
-    binary_string = string_to_binary(msg)
+
+    binary_string = convert_input_to_binary_string(msg)
     
     orig_len = len(binary_string) # no of bits
     
