@@ -1,5 +1,6 @@
-> A simple SHA-256 implementation in python which gives hash for string or a file.
+> A simple SHA-2 implementation in python which gives hash for string or a file.
 > It also handles byte stream.
+> It calculates SHA-256 and SHA-512 at the time
 
 ## Usage
 

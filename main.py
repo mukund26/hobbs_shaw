@@ -4,6 +4,7 @@ import sys
 from testing_suite.tester import hash, hash_sha512
 from config import setup_args
 from logger import log_hash
+import time
 
 def read_binary_file(filename):
     f = open(filename, mode="rb")
@@ -12,7 +13,8 @@ def read_binary_file(filename):
     return chunk
 
 
-def main(args):
+def main():
+    parser = setup_args()
     args = vars(parser.parse_args())
     msg = ''
     if args['string'] is not None:
@@ -49,6 +51,7 @@ def main(args):
     
     
 if __name__ == "__main__":
-    parser = setup_args()
-    main(parser)
+    start_time = time.time()
+    main()
+    print(f'Time Taken: {time.time() - start_time}')
     
