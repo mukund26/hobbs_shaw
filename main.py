@@ -1,7 +1,7 @@
 from sha256 import sha256_digest
 from sha512 import sha512_digest
 import sys
-from testing_suite.tester import hash, hash_sha512
+from tests.tester import hash, hash_sha512
 from config import setup_args
 from logger import log_hash
 import time

@@ -5,7 +5,7 @@ from preprocess import convert_input_to_binary_string
 
 def sha256_digest(msg):
 
-    binary_string =  convert_input_to_binary_string(msg)
+    binary_string = convert_input_to_binary_string(msg)
     
     orig_len = len(binary_string) # no of bits
 
