@@ -2,8 +2,6 @@
 > It also handles byte stream.
 > It calculates SHA-256 and SHA-512 at the time
 
-# Author - Mukund Agarwal
-
 ## Usage
 
 * Example
